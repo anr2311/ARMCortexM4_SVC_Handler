@@ -1,0 +1,6 @@
+--cpu=Cortex-M4.fp
+".\objects\cortexm4_svc.o"
+--strict --scatter ".\Objects\ArmCortexM4_SVC_Handler.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\ArmCortexM4_SVC_Handler.map" -o .\Objects\ArmCortexM4_SVC_Handler.axf

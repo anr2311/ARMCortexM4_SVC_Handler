@@ -1,0 +1,179 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             RESET, CODE, READONLY
+    2 00000000 20000100 
+              8000005D 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000001 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000 in      DCD              0x20000100,0x8000005D, 0,0,0,0,
+0,0,0,0,0,SVC_handler+1,0,0,0,0,0,0,0,0,0,0,0
+    3 0000005C                 ENTRY
+    4 0000005C         
+    5 0000005C 490F    MAIN    LDR              R1,=0X20000200
+    6 0000005E F381 8809       MSR              PSP,R1
+    7 00000062         
+    8 00000062 F04F 0003       MOV              R0,#3
+    9 00000066 F380 8814       MSR              CONTROL,R0
+   10 0000006A         
+   11 0000006A 4F0D            LDR              R7,=SRC
+   12 0000006C F857 1B04       LDR              R1,[R7],#4
+   13 00000070 683A            LDR              R2,[R7]
+   14 00000072 F8DF 8030       LDR              R8,=DST
+   15 00000076 DF22            SVC              0x022       ; Making a SVC call
+                                                            
+   16 00000078         
+   17 00000078 E7FE    STOP    B                STOP
+   18 0000007A         
+   19 0000007A         
+   20 0000007A B500    SVC_handler
+                               push             {lr}
+   21 0000007C         
+   22 0000007C         ; Logic to retrieve the embedded SVC number in SVC instr
+                       uction
+   23 0000007C F3EF 8009       MRS              R0, PSP
+   24 00000080 6980            LDR              R0, [R0, #24]
+   25 00000082 F810 0C02       LDRB             R0, [R0, #-2]
+   26 00000086 2822            CMP              R0, #0x022  ; Compare if embedd
+                                                            ed SVC number is ma
+                                                            tching
+   27 00000088 D000            BEQ              ADDITION    ; If equal perform 
+                                                            a particular task f
+                                                            or that SVC
+   28 0000008A BD00            pop              {pc}        ; If not equal do n
+                                                            othing and return b
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+                                                            ack
+   29 0000008C         
+   30 0000008C EB01 0802 
+                       ADDITION
+                               ADD              R8, R1, R2
+   31 00000090 4770            BX               LR
+   32 00000092         
+   33 00000092 00 00 00000030 
+              00000020 SRC     DCD              0X30 ,0X20
+   34 0000009C 20000200 
+              00000000 
+              00000000         AREA             RES ,DATA, READWRITE
+   35 00000000 00000000 
+              00000000 DST     DCD              0,0
+   36 00000008                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\cortexm4_svc.d -o.\objects\cortexm4_svc.o -I.\RTE\_Ta
+rget_1 -IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\
+STM32F4xx\Include -IC:\Keil_v5\ARM\CMSIS\Include --predefine="__EVAL SETA 1" --
+predefine="__UVISION_VERSION SETA 526" --predefine="STM32F407xx SETA 1" --list=
+.\listings\cortexm4_svc.lst CortexM4_SVC.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+ADDITION 0000008C
+
+Symbol: ADDITION
+   Definitions
+      At line 30 in file CortexM4_SVC.s
+   Uses
+      At line 27 in file CortexM4_SVC.s
+Comment: ADDITION used once
+MAIN 0000005C
+
+Symbol: MAIN
+   Definitions
+      At line 5 in file CortexM4_SVC.s
+   Uses
+      None
+Comment: MAIN unused
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 1 in file CortexM4_SVC.s
+   Uses
+      None
+Comment: RESET unused
+SRC 00000094
+
+Symbol: SRC
+   Definitions
+      At line 33 in file CortexM4_SVC.s
+   Uses
+      At line 11 in file CortexM4_SVC.s
+Comment: SRC used once
+STOP 00000078
+
+Symbol: STOP
+   Definitions
+      At line 17 in file CortexM4_SVC.s
+   Uses
+      At line 17 in file CortexM4_SVC.s
+Comment: STOP used once
+SVC_handler 0000007A
+
+Symbol: SVC_handler
+   Definitions
+      At line 20 in file CortexM4_SVC.s
+   Uses
+      At line 2 in file CortexM4_SVC.s
+Comment: SVC_handler used once
+in 00000000
+
+Symbol: in
+   Definitions
+      At line 2 in file CortexM4_SVC.s
+   Uses
+      None
+Comment: in unused
+7 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DST 00000000
+
+Symbol: DST
+   Definitions
+      At line 35 in file CortexM4_SVC.s
+   Uses
+      At line 14 in file CortexM4_SVC.s
+Comment: DST used once
+RES 00000000
+
+Symbol: RES
+   Definitions
+      At line 34 in file CortexM4_SVC.s
+   Uses
+      None
+Comment: RES unused
+2 symbols
+345 symbols in table
